@@ -1,0 +1,3 @@
+rootProject.name = 'ReactNativeAF'
+
+include ':app'
