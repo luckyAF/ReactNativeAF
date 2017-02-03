@@ -6,97 +6,68 @@ import {
     ScrollView,
     Dimensions,
     ToastAndroid,
+    TouchableNativeFeedback,
     ListView
 } from 'react-native';
+import Touchable from '../../common/Touchable';
+import { getNavigator }  from '../../../route';
+
 let {height, width} = Dimensions.get('window');
 let windowWidth = width;
-//import Swipeout from './Swipeout';
-import SwipeSimple from './SwipeSimple';
+var data = [
+    { name: 'Swipeout', routeId: 'SwipeoutSimple' },
+    { name: 'sortableList', routeId: 'SortableListView' },
+];
 export default class AllWidgets extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
+            dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }),
             scrollEnabled: true,
         };
+        this.renderCell = this.renderCell.bind(this);
+
+    }
+
+    componentDidMount() {
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(data),
+        });
     }
 
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'green' }}>
+                
                 <Text>组件</Text>
-                <ScrollView
-                    ref="myScrollView"
-                    keyboardDismissMode='on-drag'
-                    showsVerticalScrollIndicator={false}
-                    keyboardShouldPersistTaps={true}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
-                        <SwipeSimple
-                            onDisableScroll={() => { } }
-                            onEnableScroll={() => { } }
-                            onDelete={() => { } }
-                            rightWidth={80}
-                            >
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{
-                                    height:80,
-                                    width: windowWidth,
-                                    backgroundColor: 'white'
-                                }}>
-                                    <Text>ceshi</Text>
-                                </View>
-                            </View>
+                <ListView
+                    ref={(ref) => this.mListView = ref}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderCell} />
 
-                        </SwipeSimple>
-
-                    </View>
-                </ScrollView>
 
             </View>
         );
     }
 
-    _renderRow(rowData, sectionID, rowID) {
+    renderCell(rowData, sectionID, rowID) {
         return (
-            <Swipeout
-                left={rowData.left}
-                right={rowData.right}
-                rowID={rowID}
-                sectionID={sectionID}
-                autoClose={rowData.autoClose}
-                backgroundColor={rowData.backgroundColor}
-                close={!rowData.active}
-                onOpen={(sectionID, rowID) => this._handleSwipeout(sectionID, rowID)}
-                scroll={event => this._allowScroll(event)}>
+            <Touchable
+                onPress={() => { getNavigator().push({ id: rowData.routeId }) } }>
                 <View style={{
-                    backgroundColor: '#fff',
-                    borderBottomColor: '#eee',
-                    borderColor: 'transparent',
-                    borderWidth: 1,
-                    paddingLeft: 16,
-                    paddingTop: 14,
-                    paddingBottom: 16,
+                    flex: 1,
+                    backgroundColor: 'white',
+                    padding: 15,
                 }}>
                     <Text style={{
-                        color: '#333',
-                        fontSize: 16,
-                    }}>{rowData.text}</Text>
+                        textAlign: 'center',
+                    }}>
+                        {rowData.name}
+                    </Text>
                 </View>
-            </Swipeout>
-        );
-    }
-    _handleSwipeout(sectionID, rowID) {
-        for (var i = 0; i < rows.length; i++) {
-            if (i != rowID) rows[i].active = false;
-            else rows[i].active = true;
-        }
-        this._updateDataSource(rows);
+            </Touchable>);
+
     }
 
-    _updateDataSource(data) {
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(data),
-        });
-    }
 
 }

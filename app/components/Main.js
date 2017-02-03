@@ -69,19 +69,15 @@ export default class Main extends Component {
         switch (this.state.tab) {
             case "home":
                 return <View style={{ flex: 1, backgroundColor: 'yellow' }} />;
-
             case "widget":
-                return <AllWidgets />;
+                return <AllWidgets/>;
 
             case "common":
-                return <AllWidgets />;
+                return <AllWidgets/>;
 
             default:
                 return <View style={{ flex: 1, backgroundColor: 'white' }} />
-
-
         }
-        throw new Error(`Unknown tab ${this.props.tab}`);
     }
 }
 

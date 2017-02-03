@@ -5,6 +5,7 @@ import {
 import Main from './components/Main';
 import Splash from './components/Splash';
 import Test from './components/test/test';
+import SwipeoutSimple from './components/tabs/widget/SwipeoutSimple';
 // Navigator.SceneConfigs.
 // PushFromRight
 // PushFromLeft
@@ -31,6 +32,11 @@ routeMap.set('Splash', {
 });
 routeMap.set('test', {
   component: Test,
+  sceneAnimation: Navigator.SceneConfigs.FadeAndroid
+});
+
+routeMap.set('SwipeoutSimple', {
+  component: SwipeoutSimple,
   sceneAnimation: Navigator.SceneConfigs.FadeAndroid
 });
 

@@ -14,7 +14,7 @@ import {
 let {height, width} = Dimensions.get('window');
 let windowWidth = width;
 
-export default class SwipeSimple extends React.Component {
+export default class Swipeout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +23,7 @@ export default class SwipeSimple extends React.Component {
         };
         this.closeItem = this.closeItem.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);
-        this.onMeasure = this.onMeasure.bind(this);
+        this.onLayout = this.onLayout.bind(this)
         this.isOpen = false;
         this.touchValue = 0;;
     }
@@ -87,10 +87,11 @@ export default class SwipeSimple extends React.Component {
         });
     }
 
-    onMeasure(event) {
-        let { width, height } = event.nativeEvent.layout
+    onLayout(event) {
+        let { width, height } = event.nativeEvent.layout;
+        console.warn(height);
         this.setState({
-            contentHeight: height
+            contentHeight: height,
         })
     }
 
@@ -156,7 +157,7 @@ export default class SwipeSimple extends React.Component {
                     ]}
                     {...this.panResponder.panHandlers}>
                     <View
-                        onLayout={this.onMeasure.bind(this)}
+                        onLayout={_this.onLayout}
                         >
                         {this.props.children}
                     </View>

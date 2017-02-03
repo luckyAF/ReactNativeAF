@@ -3,5 +3,5 @@ import React from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import AFApp from './app/AFApp';
-AppRegistry.registerComponent('ReactNativeAF', () => AFApp);
+import Root from './app/index';
+AppRegistry.registerComponent('ReactNativeAF', () => Root);

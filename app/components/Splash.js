@@ -5,25 +5,25 @@ import {
   Text,
   View
 } from 'react-native';
-
+import { getNavigator } from '../route';
 export default class Main extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-                Splash 页面
-        </Text> 
+          Splash 页面
+        </Text>
       </View>
     );
   }
-    
-  componentDidMount() { 
-      let _this = this;
-      setTimeout(() => { 
-          _this.props.navigator.replace({
-              id: 'Main',
-          });
-      },500);
+
+  componentDidMount() {
+    let _this = this;
+    setTimeout(() => {
+      getNavigator().replace({
+        id: 'Main',
+      });
+    }, 500);
   }
 }
 
